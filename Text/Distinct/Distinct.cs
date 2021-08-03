@@ -22,7 +22,7 @@ namespace AzureCognitiveSearch.PowerSkills.Text.Distinct
             ILogger log,
             ExecutionContext executionContext)
         {
-            log.LogInformation("Distinct Custom Skill: C# HTTP trigger function processed a request.");
+            log.LogInformation("Distinctt Custom Skill: C# HTTP trigger function processed a request.");
 
             string skillName = executionContext.FunctionName;
             IEnumerable<WebApiRequestRecord> requestRecords = WebApiSkillHelpers.GetRequestRecords(req);
@@ -50,6 +50,8 @@ namespace AzureCognitiveSearch.PowerSkills.Text.Distinct
                         throw new ArgumentException("Input data is missing a `words` array of words to de-duplicate.", "words");
                     }
                     var words = wordsParameter.Values<string>();
+                    log.LogInformation("words are");
+
                     outRecord.Data["distinct"] = thesaurus.Dedupe(words);
                     return outRecord;
                 });
