@@ -1,11 +1,11 @@
 ---
 page_type: sample
 languages:
-- csharp
+  - csharp
 products:
-- azure
-- azure-search
-- azure-cognitive-services
+  - azure
+  - azure-search
+  - azure-cognitive-services
 name: Analyze form sample skill for cognitive search
 urlFragment: azure-analyzeform-sample
 description: This custom skill extracts specific fields from the results of a trained form recognition.
@@ -14,9 +14,7 @@ azureDeploy: https://raw.githubusercontent.com/Azure-Samples/azure-search-power-
 
 # AnalyzeForm
 
->   
-> This version of the Analyze Form skill is***deprecated***. [AnalyzeFormV2](../AnalyzeFormV2) implements the current version of the Form Recognizer service.
->
+> This version of the Analyze Form skill is**_deprecated_**. [AnalyzeFormV2](../AnalyzeFormV2) implements the current version of the Form Recognizer service.
 
 This custom skill extracts specific fields from the results of a trained form recognition.
 
@@ -26,7 +24,7 @@ A [full tutorial on this skill is available in the Azure Cognitive Seach documen
 
 In addition to the common requirements described in [the root `README.md` file](../../README.md), this function requires access to an [Azure Forms Recognizer](https://azure.microsoft.com/en-us/services/cognitive-services/form-recognizer/) resource. At the time this template was written, Forms Recognizer was in a gated public preview. If you have not done so, you may need to [request access](https://aka.ms/FormRecognizerRequestAccess).
 
-You will need to [train a model with your forms](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract) before you can use this skill. The model that was used for this example was trained using sample data that can be downloaded from [the SampleData directory](https://github.com/Azure-Samples/azure-search-power-skills/tree/main/SampleData).
+You will need to [train a model with your forms](https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract) before you can use this skill. The model that was used for this example was trained using sample data that can be downloaded from [the SampleData directory](https://github.com/hamidadelyar/azure-search-power-skills/tree/main/SampleData).
 
 ## Settings
 
@@ -39,7 +37,7 @@ After training, you will need to set the `FORMS_RECOGNIZER_MODEL_ID` application
 By default, the skill will retry at most a hundred times getting form recognition results with a one second delay between attempts until it gets a result other than "running".
 This can be changed by setting the `FORMS_RECOGNIZER_MAX_ATTEMPTS` and `FORMS_RECOGNIZER_RETRY_DELAY` application settings.
 
-The list of fields to extract and the fields they get mapped to in the response of the skill need to be configured to reflect your particular scenario. This can be done by editing [the `field-mappings.json` file](https://github.com/Azure-Samples/azure-search-power-skills/blob/main/Vision/AnalyzeForm/field-mappings.json).
+The list of fields to extract and the fields they get mapped to in the response of the skill need to be configured to reflect your particular scenario. This can be done by editing [the `field-mappings.json` file](https://github.com/hamidadelyar/azure-search-power-skills/blob/main/Vision/AnalyzeForm/field-mappings.json).
 
 ## Deployment
 
@@ -51,15 +49,15 @@ This sample data is pointing to a file stored in this repository, but when the s
 
 ```json
 {
-    "values": [
-        {
-            "recordId": "record1",
-            "data": { 
-                "formUrl": "https://github.com/Azure-Samples/azure-search-power-skills/raw/main/SampleData/Invoice_4.pdf",
-                "formSasToken":  "?st=sasTokenThatWillBeGeneratedByCognitiveSearch"
-            }
-        }
-    ]
+  "values": [
+    {
+      "recordId": "record1",
+      "data": {
+        "formUrl": "https://github.com/hamidadelyar/azure-search-power-skills/raw/main/SampleData/Invoice_4.pdf",
+        "formSasToken": "?st=sasTokenThatWillBeGeneratedByCognitiveSearch"
+      }
+    }
+  ]
 }
 ```
 
@@ -67,17 +65,17 @@ This sample data is pointing to a file stored in this repository, but when the s
 
 ```json
 {
-    "values": [
-        {
-            "recordId": "record1",
-            "data": {
-                "address": "1111 8th st. Bellevue, WA 99501 ",
-                "recipient": "Southridge Video 1060 Main St. Atlanta, GA 65024 "
-            },
-            "errors": null,
-            "warnings": null
-        }
-    ]
+  "values": [
+    {
+      "recordId": "record1",
+      "data": {
+        "address": "1111 8th st. Bellevue, WA 99501 ",
+        "recipient": "Southridge Video 1060 Main St. Atlanta, GA 65024 "
+      },
+      "errors": null,
+      "warnings": null
+    }
+  ]
 }
 ```
 
@@ -88,33 +86,33 @@ Here's a sample skill definition for this example (inputs and outputs should be 
 
 ```json
 {
-    "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
-    "name": "formrecognizer", 
-    "description": "Extracts fields from a form using a pre-trained form recognition model",
-    "uri": "[AzureFunctionEndpointUrl]/api/analyze-form?code=[AzureFunctionDefaultHostKey]",
-    "httpMethod": "POST",
-    "timeout": "PT30S",
-    "context": "/document",
-    "batchSize": 1,
-    "inputs": [
-        {
-            "name": "formUrl",
-            "source": "/document/metadata_storage_path"
-        },
-        {
-            "name": "formSasToken",
-            "source": "/document/metadata_storage_sas_token"
-        }
-    ],
-    "outputs": [
-        {
-            "name": "address",
-            "targetName": "address"
-        },
-        {
-            "name": "recipient",
-            "targetName": "recipient"
-        }
-    ]
+  "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+  "name": "formrecognizer",
+  "description": "Extracts fields from a form using a pre-trained form recognition model",
+  "uri": "[AzureFunctionEndpointUrl]/api/analyze-form?code=[AzureFunctionDefaultHostKey]",
+  "httpMethod": "POST",
+  "timeout": "PT30S",
+  "context": "/document",
+  "batchSize": 1,
+  "inputs": [
+    {
+      "name": "formUrl",
+      "source": "/document/metadata_storage_path"
+    },
+    {
+      "name": "formSasToken",
+      "source": "/document/metadata_storage_sas_token"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "address",
+      "targetName": "address"
+    },
+    {
+      "name": "recipient",
+      "targetName": "recipient"
+    }
+  ]
 }
 ```

@@ -9,22 +9,22 @@
         "description": "Prefix for all resources created by this template"
       }
     },
-      "storageAccountType": {
-        "type": "string",
-        "defaultValue": "Standard_LRS",
-        "allowedValues": [
-          "Standard_LRS",
-          "Standard_GRS",
-          "Standard_ZRS",
-          "Premium_LRS"
-        ],
-        "metadata": {
-          "description": "Storage Account type"
-        }
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "Storage Account type"
       }
+    }
   },
   "variables": {
-    "repoURL": "https://github.com/Azure-Samples/azure-search-power-skills",
+    "repoURL": "https://github.com/hamidadelyar/azure-search-power-skills",
     "functionProject": "Vision\\SplitImage\\SplitImage.csproj",
     "websiteName": "[toLower(concat(parameters('resourcePrefix'), '-site-', uniqueString(resourceGroup().id)))]",
     "storageAccount": "[toLower(concat(parameters('resourcePrefix'), uniqueString(resourceGroup().id)))]",
