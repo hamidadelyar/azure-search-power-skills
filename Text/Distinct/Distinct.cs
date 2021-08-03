@@ -49,10 +49,15 @@ namespace AzureCognitiveSearch.PowerSkills.Text.Distinct
                     {
                         throw new ArgumentException("Input data is missing a `words` array of words to de-duplicate.", "words");
                     }
-                    var words = wordsParameter.Values<string>();
-                    log.LogInformation("words are");
 
-                    outRecord.Data["distinct"] = thesaurus.Dedupe(words);
+                    log.LogInformation("words: [{0}]", string.Join(", ", wordsParameter));
+
+                    var words = wordsParameter.Values<string>();
+
+                    var distinctWords = thesaurus.Dedupe(words);
+                    outRecord.Data["distinct"] = distinctWords;
+
+                    log.LogInformation("distinct: [{0}]", string.Join(", ", distinctWords));
                     return outRecord;
                 });
 
